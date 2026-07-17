@@ -3,196 +3,512 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ADM | Área 037</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>Painel Administrativo | Área 037</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { 
-            --primary: #000; 
-            --green: #2ecc71; 
-            --bg: #121212; 
-            --card-bg: #1e1e1e;
-            --text: #ffffff;
-            --text-dim: #b3b3b3;
-            --orange: #f39c12; 
-            --red: #e74c3c;
+            --bg-main: #0b0b0c; 
+            --bg-card: #000000;
+            --bg-input: #111112;
+            --border-color: #222224;
+            --border-focus: #444448;
+            --text-main: #ffffff;
+            --text-muted: #71717a;
+            --accent-green: #2e7d32;
+            --accent-green-dim: #1b5e20;
         }
 
-        * { box-sizing: border-box; transition: all 0.2s ease; }
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Montserrat', sans-serif; 
+            border-radius: 0 !important; /* Força quinas retas em tudo */
+        }
         
         body { 
-            font-family: 'Montserrat', sans-serif; 
-            margin: 0;
-            padding: 0; 
-            background: var(--bg); 
-            color: var(--text); 
-            line-height: 1.6;
+            background: var(--bg-main); 
+            color: var(--text-main); 
+            line-height: 1.5;
+            padding-bottom: 80px;
         }
 
-        /* HEADER PREMIUM */
+        /* HEADER PROFISSIONAL */
         .adm-header { 
-            background: #000; 
-            padding: 40px 20px; 
-            text-align: center;
-            border-bottom: 2px solid #333;
-            margin-bottom: 30px;
+            background: var(--bg-card); 
+            padding: 20px; 
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 40px;
+        }
+
+        .header-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .logo-container {
-            background: white;
-            display: inline-block;
-            padding: 15px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .adm-header img { 
-            height: 70px; 
-            display: block;
+            height: 32px; 
+            filter: brightness(0) invert(1); /* Torna a logo branca para o tema sério */
+        }
+
+        .system-status {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent-green);
         }
 
         .container { 
-            max-width: 800px; 
+            max-width: 1100px; 
             margin: 0 auto; 
-            padding: 0 20px 50px;
+            padding: 0 20px;
         }
 
+        /* INDICADORES / METRICAS */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+        }
+
+        .metric-card p {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+
+        .metric-card h3 {
+            font-size: 2rem;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        /* PAINÉIS / ESTRUTURA DOS BLOCOS */
         .box { 
-            background: var(--card-bg); 
+            background: var(--bg-card); 
             padding: 30px; 
-            border-radius: 16px; 
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3); 
-            margin-bottom: 25px; 
-            border: 1px solid #333;
+            margin-bottom: 30px; 
+            border: 1px solid var(--border-color);
         }
 
         h2 { 
-            font-size: 1.1rem; 
-            color: var(--text);
-            border-left: 4px solid var(--green); 
-            padding-left: 15px; 
-            margin-bottom: 20px; 
+            font-size: 0.85rem; 
+            color: var(--text-main);
+            margin-bottom: 25px; 
             text-transform: uppercase; 
-            font-weight: 900; 
-            letter-spacing: 1px;
+            font-weight: 700; 
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 3px;
+            height: 12px;
+            background: var(--text-muted);
         }
 
-        /* FORMULÁRIOS */
+        /* INPUTS E BOTÕES SÉRIOS */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        @media(min-width: 768px) { .photo-grid { grid-template-columns: repeat(2, 1fr); } }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
         input { 
             width: 100%; 
-            padding: 14px; 
-            margin-bottom: 12px; 
-            border: 1px solid #333; 
-            border-radius: 10px; 
-            font-size: 1rem; 
+            padding: 12px; 
+            border: 1px solid var(--border-color); 
+            font-size: 0.9rem; 
             outline: none; 
-            background: #252525;
-            color: white;
+            background: var(--bg-input);
+            color: var(--text-main);
         }
 
-        input:focus { border-color: var(--green); box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.2); }
+        input:focus { 
+            border-color: var(--border-focus); 
+        }
 
         button { 
             width: 100%; 
-            padding: 16px; 
-            background: white; 
-            color: black; 
+            padding: 14px; 
+            background: #ffffff; 
+            color: #000000; 
             cursor: pointer; 
-            font-weight: 900; 
-            border: none; 
-            border-radius: 10px; 
+            font-weight: 700; 
+            border: 1px solid #ffffff; 
             text-transform: uppercase; 
-            letter-spacing: 1px;
-            margin-top: 10px;
+            letter-spacing: 1.5px;
+            font-size: 0.8rem;
         }
 
-        button:active { transform: scale(0.98); }
-        button:hover { filter: brightness(0.9); }
+        button:hover { 
+            background: transparent;
+            color: #ffffff;
+        }
 
-        /* BANNERS */
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+        .btn-secondary:hover {
+            border-color: var(--border-focus);
+            background: var(--bg-input);
+        }
+
+        /* PREVIEW DOS BANNERS */
         .banner-preview { 
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); 
-            gap: 12px; 
-            margin-top: 20px; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 15px; 
+            margin-top: 25px; 
         }
         
         .banner-thumb { 
             width: 100%; 
             aspect-ratio: 16/9; 
             object-fit: cover; 
-            border-radius: 8px; 
-            border: 2px solid #333;
-            background: #252525; 
+            border: 1px solid var(--border-color);
+            background: #111; 
         }
 
-        /* PRODUTOS */
+        /* TABELA / LISTA DE PRODUTOS */
+        .product-list-header {
+            display: grid;
+            grid-template-columns: 80px 1fr 340px;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
         .product-item { 
-            background: var(--card-bg); 
-            padding: 15px; 
-            margin-top: 15px; 
-            display: flex; 
+            background: var(--bg-card); 
+            padding: 16px; 
+            display: grid;
+            grid-template-columns: 80px 1fr 340px;
             align-items: center; 
-            border-radius: 12px; 
-            border: 1px solid #333; 
-            gap: 15px;
+            border-bottom: 1px solid var(--border-color);
+            gap: 20px;
+        }
+
+        .product-item:last-child {
+            border-bottom: none;
         }
 
         .product-item img { 
-            width: 75px; 
-            height: 75px; 
+            width: 64px; 
+            height: 64px; 
             object-fit: cover; 
-            border-radius: 10px; 
-            background: #fff; 
+            background: #111; 
+            border: 1px solid var(--border-color);
         }
         
-        .product-info { flex: 1; }
-        .product-info span { display: block; font-weight: 400; font-size: 0.8rem; color: var(--text-dim); }
-        .product-info b { color: var(--text); font-size: 1.05rem; display: block; }
+        .product-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .product-info .brand { 
+            font-size: 0.7rem; 
+            color: var(--text-muted); 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+        .product-info .name { 
+            color: var(--text-main); 
+            font-size: 0.95rem; 
+            font-weight: 500;
+        }
+        .product-info .price { 
+            color: var(--text-main); 
+            font-size: 0.9rem; 
+            font-weight: 700;
+            margin-top: 4px;
+        }
 
-        .actions { display: flex; flex-direction: column; gap: 8px; }
+        .actions { 
+            display: flex; 
+            gap: 8px; 
+            justify-content: flex-end;
+        }
         
-        .btn-price { background: var(--orange); padding: 8px 15px; font-size: 0.7rem; color: white; width: auto; }
-        .btn-del { background: var(--red); padding: 8px 15px; font-size: 0.7rem; color: white; width: auto; }
+        .actions button {
+            padding: 8px 14px;
+            font-size: 0.7rem;
+            width: auto;
+            letter-spacing: 1px;
+        }
 
-        /* RESPONSIVIDADE MOBILE */
-        @media (max-width: 500px) {
-            .product-item { flex-direction: column; text-align: center; padding: 20px; }
-            .actions { flex-direction: row; width: 100%; justify-content: center; }
+        .btn-table-edit { background: transparent; color: var(--text-main); border: 1px solid var(--border-color); }
+        .btn-table-edit:hover { border-color: var(--border-focus); background: var(--bg-input); }
+
+        .btn-table-photos { background: transparent; color: var(--text-main); border: 1px solid var(--border-color); }
+        .btn-table-photos:hover { border-color: var(--border-focus); background: var(--bg-input); }
+
+        .btn-table-del { background: transparent; color: #ff4444; border: 1px solid rgba(255, 68, 68, 0.2); }
+        .btn-table-del:hover { background: #ff4444; color: #000000; border-color: #ff4444; }
+
+        /* AREA DE ACESSOS TÉCNICA */
+        .logs-box {
+            max-height: 300px;
+            overflow-y: auto;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+        }
+        .log-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .log-item:last-child { border-bottom: none; }
+        .log-item .log-id { color: var(--text-main); font-family: monospace; }
+        .log-item .log-date { color: var(--text-muted); }
+
+        /* MODAIS RETOS */
+        .custom-modal {
+            position: fixed; 
+            inset: 0; 
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(4px); 
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 10000; 
+            display: none; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 20px;
+        }
+        .modal-box {
+            background: var(--bg-card); 
+            border: 1px solid var(--border-color); 
+            width: 100%; 
+            max-width: 500px; 
+            padding: 30px;
+        }
+        .modal-box h3 { 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            margin-bottom: 10px; 
+            font-size: 1rem; 
+            letter-spacing: 1px;
+        }
+        .modal-box p { 
+            font-size: 0.85rem; 
+            color: var(--text-muted); 
+            margin-bottom: 20px; 
+        }
+        .modal-flex-btns { 
+            display: flex; 
+            gap: 10px; 
+            margin-top: 25px;
+        }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 900px) {
+            .metrics-grid { grid-template-columns: 1fr; gap: 15px; }
+            .product-list-header { display: none; }
+            .product-item { grid-template-columns: 1fr; text-align: center; justify-items: center; padding: 24px; }
+            .actions { justify-content: center; width: 100%; margin-top: 10px; }
             .actions button { flex: 1; }
-            .product-item img { width: 130px; height: 130px; }
-            .adm-header img { height: 55px; }
         }
     </style>
 </head>
 <body>
 
     <div class="adm-header">
-        <div class="logo-container">
-            <img src="logo2.png" alt="Área 037">
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="logo2.png" alt="Área 037" onerror="this.style.display='none'">
+                <span style="font-weight: 700; font-size: 0.9rem; letter-spacing: 2px;">ÁREA 037 &bull; CONTROL PANEL</span>
+            </div>
+            <div class="system-status">
+                <div class="status-dot"></div> Terminais Online
+            </div>
         </div>
     </div>
 
     <div class="container">
+
+        <!-- METRICAS DA OPERAÇÃO -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <p>Acessos (Hoje)</p>
+                <h3 id="viewsToday">0</h3>
+            </div>
+            <div class="metric-card">
+                <p>Acessos (7 Dias)</p>
+                <h3 id="views7Days">0</h3>
+            </div>
+            <div class="metric-card">
+                <p>Acessos (30 Dias)</p>
+                <h3 id="views30Days">0</h3>
+            </div>
+        </div>
+
+        <!-- SEÇÃO DE BANNERS -->
         <div class="box">
-            <h2>Banners do Carrossel</h2>
-            <input type="text" id="b1" placeholder="Link Banner 1">
-            <input type="text" id="b2" placeholder="Link Banner 2">
-            <input type="text" id="b3" placeholder="Link Banner 3">
-            <button onclick="updateBanners()" style="background: var(--green); color: white;">Salvar Banners</button>
+            <h2>Gestão de Banners (Carrossel)</h2>
+            <div class="input-group"><label class="input-label">Banner 1 (URL)</label><input type="text" id="b1"></div>
+            <div class="input-group"><label class="input-label">Banner 2 (URL)</label><input type="text" id="b2"></div>
+            <div class="input-group"><label class="input-label">Banner 3 (URL)</label><input type="text" id="b3"></div>
+            <button onclick="updateBanners()" style="margin-top: 10px;">Atualizar Diretrizes</button>
             
             <div class="banner-preview" id="bannerThumbs"></div>
         </div>
 
+        <!-- REGISTRO DE NOVO PRODUTO -->
         <div class="box">
-            <h2>Novo Produto</h2>
-            <input type="text" id="brand" placeholder="Marca (Ex: Nike)">
-            <input type="text" id="name" placeholder="Nome do Tênis">
-            <input type="number" id="price" placeholder="Preço (Ex: 299.90)">
-            <input type="text" id="img" placeholder="Link da Imagem">
-            <button onclick="add()">Cadastrar no Site</button>
+            <h2>Indexar Novo Produto</h2>
+            
+            <div class="input-group"><label class="input-label">Marca corporativa</label><input type="text" id="brand" placeholder="Ex: NIKE"></div>
+            <div class="input-group"><label class="input-label">Designação do Produto</label><input type="text" id="name" placeholder="Ex: Air Max 90 Black"></div>
+            <div class="input-group"><label class="input-label">Valor de Venda (R$)</label><input type="number" id="price" placeholder="0.00" step="0.01"></div>
+            
+            <div class="input-group" style="margin-top: 25px;"><label class="input-label">Hiperlink da Imagem Primária (Obrigatória)</label><input type="text" id="img"></div>
+            
+            <label class="input-label">Hiperlinks de Perspectivas Adicionais (Opcionais)</label>
+            <div class="photo-grid">
+                <input type="text" id="img2" placeholder="Perspectiva 2">
+                <input type="text" id="img3" placeholder="Perspectiva 3">
+                <input type="text" id="img4" placeholder="Perspectiva 4">
+                <input type="text" id="img5" placeholder="Perspectiva 5">
+            </div>
+            
+            <button onclick="add()" style="margin-top: 15px;">Salvar no Banco de Dados</button>
         </div>
 
-        <div id="list"></div>
+        <!-- INVENTÁRIO ATUAL -->
+        <div class="box" style="padding: 0;">
+            <div style="padding: 30px 30px 10px 30px;">
+                <h2>Inventário Ativo na Vitrine</h2>
+            </div>
+            <div class="product-list-header">
+                <div>Media</div>
+                <div>Identificação Técnica</div>
+                <div style="text-align: right; padding-right: 20px;">Ações Disponíveis</div>
+            </div>
+            <div id="list"></div>
+        </div>
+
+        <!-- LOGS DE SISTEMA / ACESSOS -->
+        <div class="box">
+            <h2>Métricas de Conexões e Tráfego</h2>
+            <div class="logs-box" id="logsContainer">
+                <div style="color:var(--text-muted); text-align:center; padding:30px; font-size:0.8rem;">Sincronizando logs com Firebase Storage...</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MODAL PADRÃO DE FEEDBACK -->
+    <div id="alertModal" class="custom-modal">
+        <div class="modal-box">
+            <h3 id="alertTitle">Notificação</h3>
+            <p id="alertText">Operação concluída.</p>
+            <button onclick="closeAlertModal()">Fechar Janela</button>
+        </div>
+    </div>
+
+    <!-- MODAL EDITAR INFORMAÇÕES GERAIS -->
+    <div id="editProductModal" class="custom-modal">
+        <div class="modal-box">
+            <h3>Modificar Registro</h3>
+            <p>Altere os dados de identificação e precificação do lote:</p>
+            
+            <div class="input-group"><label class="input-label">Marca</label><input type="text" id="editBrand"></div>
+            <div class="input-group"><label class="input-label">Nome do Modelo</label><input type="text" id="editName"></div>
+            <div class="input-group"><label class="input-label">Preço Comercial (R$)</label><input type="number" id="editPrice" step="0.01"></div>
+            
+            <div class="modal-flex-btns">
+                <button class="btn-secondary" onclick="closeEditModal()">Cancelar</button>
+                <button id="editConfirmBtn">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL ADICIONAR/GERENCIAR IMAGENS EXISTENTES -->
+    <div id="editPhotosModal" class="custom-modal">
+        <div class="modal-box" style="max-width:550px;">
+            <h3>Banco de Mídia do Produto</h3>
+            <p>Gerencie as URLs e fotos vinculadas a este registro:</p>
+            
+            <div class="input-group"><label class="input-label">Capa Principal</label><input type="text" id="photoUrl1"></div>
+            <div class="input-group"><label class="input-label">Mídia Alternativa 2</label><input type="text" id="photoUrl2"></div>
+            <div class="input-group"><label class="input-label">Mídia Alternativa 3</label><input type="text" id="photoUrl3"></div>
+            <div class="input-group"><label class="input-label">Mídia Alternativa 4</label><input type="text" id="photoUrl4"></div>
+            <div class="input-group"><label class="input-label">Mídia Alternativa 5</label><input type="text" id="photoUrl5"></div>
+            
+            <div class="modal-flex-btns">
+                <button class="btn-secondary" onclick="closePhotosModal()">Cancelar</button>
+                <button id="photosConfirmBtn">Atualizar Mídias</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE EXCLUSÃO SEGURO -->
+    <div id="confirmModal" class="custom-modal">
+        <div class="modal-box" style="border-color: rgba(255,68,68,0.5)">
+            <h3>Confirmar Exclusão</h3>
+            <p>Esta operação removerá permanentemente os dados estruturais do produto selecionado de todas as vitrines.</p>
+            <div class="modal-flex-btns">
+                <button class="btn-secondary" onclick="closeConfirmModal()">Abortar</button>
+                <button style="background:#ff4444; border-color:#ff4444; color:black;" id="confirmDeleteBtn">Confirmar Remoção</button>
+            </div>
+        </div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -210,7 +526,68 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // GERENCIAR BANNERS
+        // GERENCIAMENTO DE INTERFACE DOS MODAIS
+        function showAlert(title, text) {
+            document.getElementById('alertTitle').innerText = title;
+            document.getElementById('alertText').innerText = text;
+            document.getElementById('alertModal').style.display = 'flex';
+        }
+        function closeAlertModal() { document.getElementById('alertModal').style.display = 'none'; }
+        function closeEditModal() { document.getElementById('editProductModal').style.display = 'none'; }
+        function closePhotosModal() { document.getElementById('editPhotosModal').style.display = 'none'; }
+        function closeConfirmModal() { document.getElementById('confirmModal').style.display = 'none'; }
+
+        // SINCRONIZAÇÃO DE TRAFEGO E TIMESTAMPS
+        db.ref("acessos").on("value", snap => {
+            const data = snap.val();
+            const logsContainer = document.getElementById('logsContainer');
+            
+            if(!data) {
+                document.getElementById('viewsToday').innerText = 0;
+                document.getElementById('views7Days').innerText = 0;
+                document.getElementById('views30Days').innerText = 0;
+                logsContainer.innerHTML = '<div style="color:var(--text-muted); text-align:center; padding:30px; font-size:0.8rem;">Nenhum evento registrado no arquivo.</div>';
+                return;
+            }
+
+            const agora = Date.now();
+            const umDia = 24 * 60 * 60 * 1000;
+            const inicioHoje = new Date();
+            inicioHoje.setHours(0,0,0,0);
+            const timeHoje = inicioHoje.getTime();
+
+            let hoje = 0, seteDias = 0, trintaDias = 0;
+            let logHtml = '';
+
+            const logsOrdenados = Object.keys(data).map(k => ({
+                id: k,
+                timestamp: data[k].timestamp
+            })).sort((a, b) => b.timestamp - a.timestamp);
+
+            logsOrdenados.forEach(item => {
+                const timestamp = item.timestamp;
+                if(!timestamp) return;
+
+                if(timestamp >= timeHoje) hoje++;
+                if(agora - timestamp <= 7 * umDia) seteDias++;
+                if(agora - timestamp <= 30 * umDia) trintaDias++;
+
+                const d = new Date(timestamp);
+                const dataFormatada = d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR');
+                logHtml += `
+                    <div class="log-item">
+                        <div class="log-id"><i class="fas fa-code-branch" style="margin-right:8px; opacity:0.4;"></i>${item.id}</div>
+                        <div class="log-date">${dataFormatada}</div>
+                    </div>`;
+            });
+
+            document.getElementById('viewsToday').innerText = hoje;
+            document.getElementById('views7Days').innerText = seteDias;
+            document.getElementById('views30Days').innerText = trintaDias;
+            logsContainer.innerHTML = logHtml;
+        });
+
+        // CARROSSEL DE PROMOÇÕES
         db.ref("banners").on("value", snap => {
             const b = snap.val();
             if(b) {
@@ -231,82 +608,139 @@
                 link2: document.getElementById('b2').value,
                 link3: document.getElementById('b3').value
             };
-            db.ref("banners").set(banners).then(() => alert("Banners atualizados com sucesso!"));
+            db.ref("banners").set(banners).then(() => showAlert("Confirmação", "Parâmetros do carrossel redefinidos com sucesso."));
         }
 
-        // CADASTRAR PRODUTO
+        // CADASTRO NO INVENTÁRIO
         function add() {
             const data = {
                 brand: document.getElementById('brand').value.toUpperCase(),
                 name: document.getElementById('name').value,
                 price: Number(document.getElementById('price').value),
-                img: document.getElementById('img').value
+                img: document.getElementById('img').value,
+                img2: document.getElementById('img2').value || "",
+                img3: document.getElementById('img3').value || "",
+                img4: document.getElementById('img4').value || "",
+                img5: document.getElementById('img5').value || ""
             };
-            if(data.name && data.price) {
-                db.ref("produtos").push(data).then(() => {
-                    alert("Produto cadastrado com sucesso!");
-                    document.getElementById('brand').value = "";
-                    document.getElementById('name').value = "";
-                    document.getElementById('price').value = "";
-                    document.getElementById('img').value = "";
-                });
-            } else {
-                alert("Preencha o nome e o preço!");
+
+            if(!data.name || !data.price || !data.img) {
+                return showAlert("Erro de Protocolo", "Impossível prosseguir com campos obrigatórios vazios (Nome, Preço, Capa).");
             }
+
+            db.ref("produtos").push(data).then(() => {
+                showAlert("Sucesso", "Item armazenado e publicado.");
+                document.getElementById('brand').value = "";
+                document.getElementById('name').value = "";
+                document.getElementById('price').value = "";
+                document.getElementById('img').value = "";
+                document.getElementById('img2').value = "";
+                document.getElementById('img3').value = "";
+                document.getElementById('img4').value = "";
+                document.getElementById('img5').value = "";
+            });
         }
 
-        // LISTAGEM DE PRODUTOS COM FORMATAÇÃO CORRETA
+        // MONITOR DO BANCO DE PRODUTOS
         db.ref("produtos").on("value", snap => {
             const list = document.getElementById('list');
-            list.innerHTML = '<h2>Produtos Cadastrados</h2>';
+            list.innerHTML = '';
             const data = snap.val();
             
-            if(data) {
-                Object.keys(data).forEach(key => {
-                    const p = data[key];
-                    
-                    // FORMATAÇÃO PROFISSIONAL DE MOEDA
-                    const precoFormatado = Number(p.price).toLocaleString('pt-BR', {
-                        style: 'currency',
-                        currency: 'BRL'
-                    });
-
-                    list.innerHTML += `
-                        <div class="product-item">
-                            <img src="${p.img}" onerror="this.src='https://placehold.co/100x100?text=Sem+Foto'">
-                            <div class="product-info">
-                                <span>${p.brand || 'MULTI-MARCAS'}</span>
-                                <b>${p.name}</b>
-                                <b style="color:var(--green)">${precoFormatado}</b>
-                            </div>
-                            <div class="actions">
-                                <button class="btn-price" onclick="changePrice('${key}', ${p.price})">EDITAR R$</button>
-                                <button class="btn-del" onclick="del('${key}')">EXCLUIR</button>
-                            </div>
-                        </div>`;
-                });
+            if(!data) {
+                list.innerHTML = '<div style="color:var(--text-muted); text-align:center; padding:40px; font-size:0.85rem;">Inventário vazio.</div>';
+                return;
             }
+
+            Object.keys(data).forEach(key => {
+                const p = data[key];
+                const precoFormatado = Number(p.price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+                list.innerHTML += `
+                    <div class="product-item">
+                        <img src="${p.img}" onerror="this.src='https://placehold.co/100x100?text=No+Media'">
+                        <div class="product-info">
+                            <span class="brand">${p.brand || 'GENÉRICO'}</span>
+                            <span class="name">${p.name}</span>
+                            <span class="price">${precoFormatado}</span>
+                        </div>
+                        <div class="actions">
+                            <button class="btn-table-edit" onclick="openEditProduct('${key}', '${p.brand || ""}', '${p.name.replace(/'/g, "\\'")}', ${p.price})">Estrutura</button>
+                            <button class="btn-table-photos" onclick="openManagePhotos('${key}')">+ Mídias</button>
+                            <button class="btn-table-del" onclick="del('${key}')">Remover</button>
+                        </div>
+                    </div>`;
+            });
         });
 
-        // EDITAR PREÇO
-        window.changePrice = (id, oldPrice) => {
-            const novo = prompt("Digite o novo preço (use ponto para centavos):", oldPrice);
-            if(novo !== null && novo !== "") {
-                const valorNumerico = Number(novo.replace(',', '.'));
-                if(!isNaN(valorNumerico)) {
-                    db.ref("produtos/" + id).update({ price: valorNumerico })
-                      .then(() => alert("Preço atualizado!"));
-                } else {
-                    alert("Erro: Digite apenas números.");
+        // EDIÇÃO DE METADADOS
+        window.openEditProduct = (id, oldBrand, oldName, oldPrice) => {
+            document.getElementById('editBrand').value = oldBrand;
+            document.getElementById('editName').value = oldName;
+            document.getElementById('editPrice').value = oldPrice;
+            document.getElementById('editProductModal').style.display = 'flex';
+            
+            document.getElementById('editConfirmBtn').onclick = () => {
+                const novoValor = Number(document.getElementById('editPrice').value);
+                const novoNome = document.getElementById('editName').value;
+                const novaMarca = document.getElementById('editBrand').value.toUpperCase();
+
+                if(!novoNome || isNaN(novoValor) || novoValor <= 0) {
+                    return showAlert("Erro", "Valores inseridos são inválidos.");
                 }
-            }
+
+                db.ref("produtos/" + id).update({
+                    brand: novaMarca,
+                    name: novoNome,
+                    price: novoValor
+                }).then(() => {
+                    closeEditModal();
+                    showAlert("Sucesso", "Metadados do lote modificados.");
+                });
+            };
         }
 
-        // EXCLUIR
+        // GALERIA SECUNDÁRIA INTERNA
+        window.openManagePhotos = (id) => {
+            db.ref("produtos/" + id).once("value").then(snap => {
+                const p = snap.val();
+                if(!p) return;
+
+                document.getElementById('photoUrl1').value = p.img || "";
+                document.getElementById('photoUrl2').value = p.img2 || "";
+                document.getElementById('photoUrl3').value = p.img3 || "";
+                document.getElementById('photoUrl4').value = p.img4 || "";
+                document.getElementById('photoUrl5').value = p.img5 || "";
+
+                document.getElementById('editPhotosModal').style.display = 'flex';
+
+                document.getElementById('photosConfirmBtn').onclick = () => {
+                    const img1 = document.getElementById('photoUrl1').value;
+                    if(!img1) return showAlert("Bloqueio", "A imagem primária de indexação não pode ser nula.");
+
+                    db.ref("produtos/" + id).update({
+                        img: img1,
+                        img2: document.getElementById('photoUrl2').value || "",
+                        img3: document.getElementById('photoUrl3').value || "",
+                        img4: document.getElementById('photoUrl4').value || "",
+                        img5: document.getElementById('photoUrl5').value || ""
+                    }).then(() => {
+                        closePhotosModal();
+                        showAlert("Atualizado", "Diretórios de imagem atualizados.");
+                    });
+                };
+            });
+        }
+
+        // REMOÇÃO SEGURA
         window.del = (id) => { 
-            if(confirm("Tem certeza que deseja apagar este produto?")) {
-                db.ref("produtos/" + id).remove();
-            }
+            document.getElementById('confirmModal').style.display = 'flex';
+            document.getElementById('confirmDeleteBtn').onclick = () => {
+                db.ref("produtos/" + id).remove().then(() => {
+                    closeConfirmModal();
+                    showAlert("Sucesso", "Índice removido da base de dados ativa.");
+                });
+            };
         }
     </script>
 </body>
